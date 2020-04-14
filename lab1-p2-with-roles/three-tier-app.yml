@@ -27,3 +27,14 @@
     - tomcat
   roles:
     - tomcat
+
+- name: deploy index.html
+  hosts: apps
+  gather_facts: false
+  tags:
+    - config_repos
+  tasks:
+  - name: copy static index.html to tomcat webapps/ansible/index.html
+    template:
+      src: index.html.app
+      dest: /usr/share/tomcat/webapps/ansible/index.html
