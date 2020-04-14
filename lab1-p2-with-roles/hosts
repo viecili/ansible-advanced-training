@@ -1,16 +1,25 @@
-[frontends] 
-frontend1 ansible_host=frontend1."{{ GUID }}".internal
+[frontends]
+frontend1 ansible_host=frontend1.d9d8.internal
 
-[apps] 
-app[1:2] ansible_host=app[1:2]."{{ GUID }}".internal
+[apps]
+app1 ansible_host=app1.d9d8.internal
+app2 ansible_host=app2.d9d8.internal
 
-[appdbs] 
-appdb1 ansible_host=appdb1."{{ GUID }}".internal
+[appdbs]
+appdb1 ansible_host=appdb1.d9d8.internal
 
-[internal:children]
+[support]
+support1 ansible_host=support1.d9d8.internal
+
+[threetierapp:children]
 frontends
 apps
 appdbs
+support
 
-[internal:vars]
-GUID="{{ lookup('env', 'GUID') }}"
+[threetierapp:vars]
+timeout=60
+ansible_become=yes
+ansible_user=ec2-user
+ansible_ssh_private_key_file="~/.ssh/d9d8key.pem"
+ansible_ssh_common_args="-o StrictHostKeyChecking=no"
