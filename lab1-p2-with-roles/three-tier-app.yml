@@ -38,3 +38,11 @@
     template:
       src: index.html.app
       dest: /usr/share/tomcat/webapps/ansible/index.html
+
+- name: deploy postgres
+  hosts: appdbs
+  gather_facts: false
+  tags:
+    - postgres
+  roles:
+    - geerlingguy.postgresql
